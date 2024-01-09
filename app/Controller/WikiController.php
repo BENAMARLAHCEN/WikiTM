@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Controller;
+use App\Model\Category;
+use App\Model\Tag;
 use App\Model\Wiki;
 
 class WikiController extends Controller
@@ -47,6 +49,22 @@ class WikiController extends Controller
         } else {
             echo "The wiki is not publicing we have some errors in the system";
         }
+    }
+
+    function authorWiki()
+    {
+        $wikis = new Wiki();
+        $wikis = $wikis->selectRecords('*', 'id =' . $_SESSION['userId'], 'create_date DESC');
+        $this->view('user/Wiki', compact('wikis'));
+    }
+
+    function addform()
+    {
+        $tags = new Tag();
+        $tags = $tags->selectRecords();
+        $category = new Category();
+        $category = $category->selectRecords();
+        $this->view('user/addWiki', compact('tags','category'));
     }
 
     function insert()
