@@ -6,6 +6,8 @@ use App\Controller;
 use App\Model\Category;
 use App\Model\Tag;
 use App\Model\Wiki;
+use App\Model\WikiCategory;
+use App\Model\WikiTag;
 
 class WikiController extends Controller
 {
@@ -54,7 +56,7 @@ class WikiController extends Controller
     function authorWiki()
     {
         $wikis = new Wiki();
-        $wikis = $wikis->selectRecords('*', 'id =' . $_SESSION['userId'], 'create_date DESC');
+        $wikis = $wikis->selectRecords('*', 'author_id =' . $_SESSION['userId'], 'create_date DESC');
         $this->view('user/Wiki', compact('wikis'));
     }
 
@@ -64,8 +66,34 @@ class WikiController extends Controller
         $tags = $tags->selectRecords();
         $category = new Category();
         $category = $category->selectRecords();
-        $this->view('user/addWiki', compact('tags','category'));
+        $this->view('user/addWiki', compact('tags', 'category'));
     }
+
+    function Editform()
+    {
+        $id = $_GET['id'];
+        $wikis = new Wiki();
+        $wiki = $wikis->selectRecords('*', 'id =' . $id);
+        if (count($wiki) == 0) {
+            header('location:MyWiki');
+            exit();
+        }
+        if ($wiki[0]->author_id != $_SESSION['userID']) {
+            header('location:MyWiki');
+            exit();
+        }
+        $wtag = new WikiTag();
+        $wtag = $wtag->selectRecords('*', 'wiki_id =' . $id);
+        $wcategory = new WikiCategory();
+        $wcategory = $wcategory->selectRecords('*', 'wiki_id =' . $id);
+        $tags = new Tag();
+        $tags = $tags->selectRecords();
+        $category = new Category();
+        $category = $category->selectRecords();
+        $this->view('user/editWiki', compact('wiki', 'tags', 'category','wcategory','wtag'));
+    }
+
+
 
     function insert()
     {
