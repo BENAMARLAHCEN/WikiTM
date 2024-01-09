@@ -13,18 +13,20 @@ class Connection {
     private static $instance;
 
 
-    public function __construct(string $dbname, string $host, string $username, string $password) {
-        $this->dbname = $dbname;
-        $this->host = $host;
-        $this->username = $username;
-        $this->password = $password;
+    public function __construct() {
+        $this->host = DB_HOST;
+        $this->dbname = DB_NAME;
+        $this->username = DB_USER;
+        $this->password = DB_PASS;
+
+        return $this->getPDO();
     }
 
 
-    public static function getInstance(string $dbname, string $host, string $username, string $password): Connection {
+    public static function getInstance(): Connection {
         if (self::$instance === null) {
             // Create a new instance if it doesn't exist
-            self::$instance = new self($dbname, $host, $username, $password);
+            self::$instance = new self();
         }
         return self::$instance;
     }
