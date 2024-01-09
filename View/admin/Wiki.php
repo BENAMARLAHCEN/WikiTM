@@ -5,7 +5,6 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">WIKI LIST</h5>
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="bi bi-clipboard-plus"></i></button>
 
                     <table class="table datatable">
                         <thead>
@@ -30,9 +29,9 @@
                                     <td><?= $wiki->update_date ?></td>
                                     <td>
                                         <?php if ($wiki->archived) { ?>
-                                            <button type="button" class="btn btn-success">Accept</button>
+                                            <button type="button" class="btn btn-success" onclick="Publiced(<?=$wiki->id?>)">Accept</button>
                                         <?php } else { ?>
-                                            <button type="button" class="btn btn-danger">archived</button>
+                                            <button type="button" class="btn btn-danger" onclick="archive(<?=$wiki->id?>)">archived</button>
                                         <?php } ?>
                                     </td>
                                 </tr>
