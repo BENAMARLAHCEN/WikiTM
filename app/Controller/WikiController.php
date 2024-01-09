@@ -93,14 +93,24 @@ class WikiController extends Controller
         $this->view('user/editWiki', compact('wiki', 'tags', 'category', 'wtag'));
     }
 
-    
+
 
     function insert()
     {
-        $name = $_POST['name'];
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $category = $_POST['category'];
+        $tags = $_POST['tags'];
         $wiki = new Wiki();
-        if ($wiki->insertRecord(['name' => $name])) {
+        $wikitags = new WikiTag();
+        if ($wiki->insertRecord(compact('title', 'content', 'category'))) {
             echo "The wiki is inserted successfully";
+            $wiki = $wiki->getlastInsertedId();
+            foreach ($tags as $tag) {
+                if (!$wikitags->insertRecord(['wiki_id' => $wiki, 'tag_id' => $tag])) {
+                    echo 'tag with id ' . $tag . ' not insert';
+                }
+            }
         } else {
             echo "The wiki is not inserted";
         }
