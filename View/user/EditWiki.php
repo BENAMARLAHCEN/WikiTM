@@ -30,7 +30,7 @@
                         <select class="form-select" name="category" id="categorySelect">
                             <?php foreach ($category as $cat) { 
                                 $selected = '';
-                                if ($cat->id == $wcategory[0]->category_id) {
+                                if ($cat->id == $wiki->categoryID) {
                                     $selected = 'selected';
                                 }
                                 ?>

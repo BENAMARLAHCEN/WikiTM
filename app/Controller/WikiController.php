@@ -78,22 +78,22 @@ class WikiController extends Controller
             header('location:MyWiki');
             exit();
         }
-        if ($wiki[0]->author_id != $_SESSION['userID']) {
+
+        if ($wiki[0]->author_id != $_SESSION['userId']) {
+
             header('location:MyWiki');
             exit();
         }
         $wtag = new WikiTag();
         $wtag = $wtag->selectRecords('*', 'wiki_id =' . $id);
-        $wcategory = new WikiCategory();
-        $wcategory = $wcategory->selectRecords('*', 'wiki_id =' . $id);
         $tags = new Tag();
         $tags = $tags->selectRecords();
         $category = new Category();
         $category = $category->selectRecords();
-        $this->view('user/editWiki', compact('wiki', 'tags', 'category','wcategory','wtag'));
+        $this->view('user/editWiki', compact('wiki', 'tags', 'category', 'wtag'));
     }
 
-
+    
 
     function insert()
     {
