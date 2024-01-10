@@ -101,9 +101,10 @@ class WikiController extends Controller
         $content = $_POST['content'];
         $category = $_POST['category'];
         $tags = $_POST['tags'];
+        $author_id = $_SESSION['userId'];
         $wiki = new Wiki();
         $wikitags = new WikiTag();
-        if ($wiki->insertRecord(compact('title', 'content', 'category'))) {
+        if ($wiki->insertRecord(compact('title', 'content', 'category', 'author_id'))) {
             echo "The wiki is inserted successfully";
             $wiki = $wiki->getlastInsertedId();
             foreach ($tags as $tag) {
@@ -118,25 +119,44 @@ class WikiController extends Controller
 
     function update()
     {
-        $name = $_POST['name'];
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $category = $_POST['category'];
+        $tags = $_POST['tags'];
         $id = $_POST['id'];
         $wiki = new Wiki();
-        $currentDate = date('Y-m-d H:i:s');
-        if ($wiki->updateRecord(['name' => $name, 'update_date' => $currentDate], $id)) {
-            echo "The wiki is updated successfully";
+        $wikitags = new WikiTag();
+        $update_date = date('Y-m-d H:i:s');
+        if (count($wiki->selectRecords('*', 'id = ' . $id . ' and author_id = ' . $_SESSION['userId']))) {
+            if ($wiki->updateRecord(compact('title', 'content', 'category', 'update_date'), $id)) {
+                echo "The wiki is updated successfully";
+                $wikitags->deleteRecord($id);
+                foreach ($tags as $tag) {
+                    if (!$wikitags->insertRecord(['wiki_id' => $id, 'tag_id' => $tag])) {
+                        echo 'tag with id ' . $tag . ' not insert';
+                    }
+                }
+            } else {
+                echo "The wiki is not updated";
+            }
         } else {
-            echo "The wiki is not updated";
+            echo "You didn't have access to delete this wiki";
         }
     }
 
     function delete()
     {
         $id = $_POST['id'];
+
         $wiki = new Wiki();
-        if ($wiki->deleteRecord($id)) {
-            echo "The tag is deleted successfully";
+        if (count($wiki->selectRecords('*', 'id = ' . $id . ' and author_id = ' . $_SESSION['userId']))) {
+            if ($wiki->deleteRecord($id)) {
+                echo "The wiki is deleted successfully";
+            } else {
+                echo "The wiki is not deleted";
+            }
         } else {
-            echo "The tag is not deleted";
+            echo "You didn't have access to delete this wiki";
         }
     }
 }
