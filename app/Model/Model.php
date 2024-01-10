@@ -128,6 +128,10 @@ class Model
         }
     }
 
+    public function getlastInsertedId(){
+        return $this->pdo->lastInsertId();
+    }
+
     protected function logError(PDOException $e)
     {
         $logFilePath = dirname(__DIR__ . '../') . '\logs\error.log';
