@@ -37,7 +37,7 @@
 
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <select class="form-select" name="tag[]" id="multiple-select-field" data-placeholder="Choose tags" multiple>
+                        <select class="form-select" name="tags[]" id="multiple-select-field" data-placeholder="Choose tags" multiple>
                             <?php foreach ($tags as $tag) { ?>
                                 <option value="<?= $tag->id ?>"><?= $tag->name ?></option>
                             <?php } ?>

@@ -35,11 +35,8 @@
                                     <td><?= $wiki->create_date ?></td>
                                     <td><?= $wiki->update_date ?></td>
                                     <td>
-                                        <?php if ($wiki->archived) { ?>
-                                            <button type="button" class="btn btn-success">Accept</button>
-                                        <?php } else { ?>
-                                            <button type="button" class="btn btn-danger">archived</button>
-                                        <?php } ?>
+                                        <a href="EditWiki?id=<?= $wiki->id ?>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
+                                        <button type="button" class="btn btn-danger"><i class="bi bi-eraser"></i></button>
                                     </td>
                                 </tr>
                             <?php } ?>

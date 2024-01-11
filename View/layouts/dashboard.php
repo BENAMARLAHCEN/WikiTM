@@ -15,9 +15,9 @@ require('include/head.php');
 
     <main id="main" class="main">
 
-        
+
         <section class="section dashboard">
-            <?=$content ?>
+            <?= $content ?>
         </section>
     </main>
 
@@ -30,11 +30,16 @@ require('include/head.php');
         <script src="https://cdn.tiny.cloud/1/uap6tfyqy3524i3iy3fg13e083sxl1v17417bwu2gks9ovcu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Select 2 CDN script -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     </div>
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
     <script src="assets/js/ajax.js"></script>
-    
+    <script src="assets/js/select.js"></script>
+
 </body>
 
 </html>

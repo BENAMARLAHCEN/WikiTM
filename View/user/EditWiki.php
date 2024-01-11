@@ -30,7 +30,7 @@
                         <select class="form-select" name="category" id="categorySelect">
                             <?php foreach ($category as $cat) { 
                                 $selected = '';
-                                if ($cat->id == $wiki->categoryID) {
+                                if ($cat->id == $wiki->category) {
                                     $selected = 'selected';
                                 }
                                 ?>
@@ -43,7 +43,7 @@
 
                 <div class="col-md-7">
                     <div class="form-floating mb-3">
-                        <select class="form-select" name="tag[]" id="multiple-select-field" data-placeholder="Choose tags" multiple>
+                        <select class="form-select" name="tags[]" id="multiple-select-field" data-placeholder="Choose tags" multiple>
                             <?php foreach ($tags as $tag) {
                                 $selected = ''; 
                                 foreach ($wtag as $wtg) {
