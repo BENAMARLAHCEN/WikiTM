@@ -78,7 +78,7 @@ class AuthController extends Controller
         }
         if (count($errors) == 0) {
             $user = new User();
-            if (count($user->selectRecords('*', 'email = ' . $email)) != 0) {
+            if (count($user->selectRecords('*', "email = '$email'")) != 0) {
                 $errors['data'] = "this email already exists";
             } else {
                 $password = password_hash($password, PASSWORD_BCRYPT);
