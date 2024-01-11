@@ -2,12 +2,14 @@
 
 namespace App\Middleware;
 
+use App\core\Helper;
+
 class Middleware
 {
     public const MAP = [
-        'admin' => admin::class,
-        'author' => author::class,
-        'guest' => guest::class
+        'admin' => IsAdmin::class,
+        'author' => IsAuthor::class,
+        'guest' => IsGuest::class
     ];
 
     public static function resolve($key)

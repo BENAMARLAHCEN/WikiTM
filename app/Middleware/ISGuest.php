@@ -2,10 +2,12 @@
 
 namespace App\Middleware;
 
-class Guest
+use App\core\Helper;
+
+class IsGuest
 {
     public function handle(){
-        if (isset($_SESSION['role'])) {
+        if (!Helper::hasrole(['guest'])) {
             header('location:'.BS_URI.'/');
             exit();
         }

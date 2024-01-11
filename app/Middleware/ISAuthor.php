@@ -2,10 +2,12 @@
 
 namespace App\Middleware;
 
-class Admin
+use App\core\Helper;
+
+class ISAuthor
 {
     public function handle(){
-        if (!$_SESSION['role'] == 'admin' ?? false) {
+        if (!Helper::hasrole(['author'])) {
             header('location:'.BS_URI.'/');
             exit();
         }
