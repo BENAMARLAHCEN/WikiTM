@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller;
+use App\core\Session;
 use App\core\Validation;
 use App\Model\User;
 
@@ -19,7 +20,42 @@ class AuthController extends Controller
 
     function login()
     {
-        
+        $errors = [];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        if (empty($email) || empty($password)) {
+            $errors['data'] = "insert all your information";
+        }
+        if (Validation::verfyEmail($email)) {
+            $errors['email'] = "Please enter a valid Email adddress!";
+        }
+        if (Validation::verfyPassword($password)) {
+            $errors['password'] = "Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 8 characters long.";
+        }
+
+        if (count($errors) == 0) {
+            $user = new User();
+            $userdata = $user->selectRecords('*', "email = '$email'");
+            var_dump($userdata);
+            if (count($userdata) == 0) {
+                var_dump($userdata);
+                $errors['data'] = "It's look like you're not yet a member! Click on the bottom link to signup.";
+            } else if (password_verify($password, $userdata[0]->password)) {
+
+                Session::add('username',$userdata[0]->username);
+                Session::add('email',$userdata[0]->email);
+                Session::add('userId',$userdata[0]->id);
+                Session::add('role',$userdata[0]->role);
+                Session::add('image',$userdata[0]->image);
+
+                setcookie('email', $email, time() + 2 * 33333, '/');
+                setcookie('password', $password, time() + 2 * 33333, '/');
+                header("location:/");
+            } else {
+                $errors['data'] = "Incorrect email or password!";
+            }
+        }
+        $this->render('login', compact('errors'));
     }
     function signup()
     {
@@ -59,5 +95,7 @@ class AuthController extends Controller
     }
     function logout()
     {
+        session_destroy();
+        header('location:./');
     }
 }
