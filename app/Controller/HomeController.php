@@ -17,7 +17,7 @@ class HomeController extends Controller
         $tags = $tags->selectRecords('*', null, 'create_date DESC');
         $category = new Category();
         $category = $category->selectRecords('*', null, 'create_date DESC');
-        $this->view('home', compact('wikis','tags', 'category'), 'main');
+        $this->view('home', compact('wikis', 'tags', 'category'), 'main');
     }
 
     function wikiDetail()
@@ -26,11 +26,17 @@ class HomeController extends Controller
             $id = $_GET['wk'];
             $wikis = new Wiki();
             $wiki = $wikis->selectRecords(' wiki.*,category.name,user.username,user.about,user.image,user.Job ', 'wiki.id = ' . $id, null, null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category ');
+            $wikiId = $wiki[0]->id;
+            $tags = new Tag();
+            $tags = $tags->selectRecords('*', " wikitags.wiki_id = $wikiId ", null , null, " INNER JOIN wikitags on wikitags.tag_id = tags.id");
+
             if (count($wiki) != 0) {
-            $this->view('wiki', compact('wiki'), 'main');
-            }else {
-                $this->view('wiki', compact('wiki'), 'main');
+                $wikis->addView($wikiId);
+                $wiki = $wiki[0];
+                $this->view('wiki', compact('wiki', 'tags'), 'main');
+                exit;
             }
         }
+        $this->view('wiki', compact('wiki'), 'main');
     }
 }

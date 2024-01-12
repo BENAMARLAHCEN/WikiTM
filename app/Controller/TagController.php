@@ -1,23 +1,29 @@
 <?php
+
 namespace App\Controller;
+
 use App\Controller;
 use App\Model\Tag;
 
-class TagController extends Controller{
-    function index(){
+class TagController extends Controller
+{
+    function index()
+    {
         $tags = new Tag();
-        $tags = $tags->selectRecords('*',null,'create_date DESC');
-        $this->view('admin/Tags',compact('tags'));
+        $tags = $tags->selectRecords('*', null, 'create_date DESC');
+        $this->view('admin/Tags', compact('tags'));
     }
     function insert()
     {
         $name = $_POST['name'];
         $tag = new Tag();
         if ($tag->insertRecord(['name' => $name])) {
-            echo "The tag is inserted successfully";
-        }else {
-            echo "The tag is not inserted";
+            $_SESSION["valid"] =  "The tag is inserted successfully";
+        } else {
+            $_SESSION["errors"] = "The tag is not inserted";
         }
+        header('location:/WikiTM/Tags');
+        
     }
 
     function update()
@@ -26,21 +32,35 @@ class TagController extends Controller{
         $id = $_POST['id'];
         $tag = new Tag();
         $currentDate = date('Y-m-d H:i:s');
-        if ($tag->updateRecord(['name' => $name, 'update_date' => $currentDate],$id)) {
-            echo "The tag is updated successfully";
+        if ($tag->updateRecord(['name' => $name, 'update_date' => $currentDate], $id)) {
+            $_SESSION["valid"] =  "The tag is updated successfully";
         } else {
-            echo "The tag is not updated";
+            $_SESSION["errors"] = "The tag is not updated";
         }
+        header('location:/WikiTM/Tags');
+
     }
 
     function delete()
     {
-        $id = $_POST['id'];
-        $tag = new Tag();
-        if ($tag->deleteRecord($id)) {
-            echo "The tag is deleted successfully";
-        } else {
-            echo "The tag is not deleted";
+        $id = $_POST['delete'] ?? '';
+        if (!empty($id)) {
+            $tag = new Tag();
+
+            if ($tag->deleteRecord($id)) {
+                $_SESSION["valid"] =  "The tag is deleted successfully";
+            } else {
+                $_SESSION["errors"] = "The tag is not deleted";
+            }
         }
+        header('location:/WikiTM/Tags');
+    }
+
+    function getTag()
+    {
+        $id = $_POST['id'];
+        $Tag = new Tag();
+        $Tag = $Tag->selectRecords('*', ' id = ' . $id)[0];
+        echo $Tag->name;
     }
 }

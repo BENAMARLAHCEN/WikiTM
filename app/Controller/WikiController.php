@@ -105,16 +105,19 @@ class WikiController extends Controller
         $wiki = new Wiki();
         $wikitags = new WikiTag();
         if ($wiki->insertRecord(compact('title', 'content', 'category', 'author_id'))) {
-            echo "The wiki is inserted successfully";
+            $_SESSION["valid"] = "The wiki is inserted successfully";
             $wiki = $wiki->getlastInsertedId();
             foreach ($tags as $tag) {
                 if (!$wikitags->insertRecord(['wiki_id' => $wiki, 'tag_id' => $tag])) {
                     echo 'tag with id ' . $tag . ' not insert';
                 }
             }
+            header('location:/WikiTM/MyWiki');
+            exit;
         } else {
-            echo "The wiki is not inserted";
+            $_SESSION["errors"] = "The wiki is not inserted";
         }
+        $this->addform();
     }
 
     function update()
@@ -129,34 +132,45 @@ class WikiController extends Controller
         $update_date = date('Y-m-d H:i:s');
         if (count($wiki->selectRecords('*', 'id = ' . $id . ' and author_id = ' . $_SESSION['userId']))) {
             if ($wiki->updateRecord(compact('title', 'content', 'category', 'update_date'), $id)) {
-                echo "The wiki is updated successfully";
+                $_SESSION["valid"] = "The wiki is updated successfully";
                 $wikitags->deleteRecord($id);
                 foreach ($tags as $tag) {
+
                     if (!$wikitags->insertRecord(['wiki_id' => $id, 'tag_id' => $tag])) {
                         echo 'tag with id ' . $tag . ' not insert';
                     }
                 }
+                header('location:/WikiTM/MyWiki');
+                exit;
             } else {
-                echo "The wiki is not updated";
+                $_SESSION["errors"] = "The wiki is not updated";
             }
         } else {
-            echo "You didn't have access to delete this wiki";
+            $_SESSION["errors"] = "You didn't have access to delete this wiki";
         }
     }
 
     function delete()
     {
-        $id = $_POST['id'];
+        $errors = [];
+        if (isset($_POST['delete'])) {
 
-        $wiki = new Wiki();
-        if (count($wiki->selectRecords('*', 'id = ' . $id . ' and author_id = ' . $_SESSION['userId']))) {
-            if ($wiki->deleteRecord($id)) {
-                echo "The wiki is deleted successfully";
+            $id = $_POST['delete'];
+
+            $wiki = new Wiki();
+            if (count($wiki->selectRecords('*', 'id = ' . $id . ' and author_id = ' . $_SESSION['userId']))) {
+                if ($wiki->deleteRecord($id)) {
+                    $_SESSION["valid"] = "The wiki is deleted successfully";
+                } else {
+                    $_SESSION["errors"] = "The wiki is not deleted";
+                }
             } else {
-                echo "The wiki is not deleted";
+                $_SESSION["errors"] = "You didn't have access to delete this wiki";
             }
-        } else {
-            echo "You didn't have access to delete this wiki";
+        }else{
+            $_SESSION["errors"] = "no sure what wiki you need to delete";
         }
+        $this->authorWiki();
+
     }
 }

@@ -10,7 +10,7 @@ class CategoryController extends Controller
     function index()
     {
         $category = new Category();
-        $category = $category->selectRecords('*',null,'create_date DESC');
+        $category = $category->selectRecords('*', null, 'create_date DESC');
         $this->view('admin/Category', compact('category'));
     }
 
@@ -19,10 +19,11 @@ class CategoryController extends Controller
         $name = $_POST['name'];
         $category = new Category();
         if ($category->insertRecord(['name' => $name])) {
-            echo "The category is inserted successfully";
+            $_SESSION["valid"] = "The category is inserted successfully";
         } else {
-            echo "The category is not inserted";
+            $_SESSION["errors"] =  "The category is not inserted";
         }
+        header('location:/WikiTM/Category');
     }
     function update()
     {
@@ -30,20 +31,33 @@ class CategoryController extends Controller
         $id = $_POST['id'];
         $category = new Category();
         $currentDate = date('Y-m-d H:i:s');
-        if ($category->updateRecord(['name' => $name, 'update_date' => $currentDate],$id)) {
-            echo "The category is updated successfully";
+        if ($category->updateRecord(['name' => $name, 'update_date' => $currentDate], $id)) {
+            $_SESSION["valid"] = "The category is updated successfully";
         } else {
-            echo "The category is not updated";
+            $_SESSION["errors"] = "The category is not updated";
         }
+        header('location:/WikiTM/Category');
     }
     function delete()
     {
+        $id = $_POST['delete'] ?? '';
+
+        if (!empty($id)) {
+            $category = new Category();
+            if ($category->deleteRecord($id)) {
+                $_SESSION["valid"] = "The category is deleted successfully";
+            } else {
+                $_SESSION["errors"] = "The category is not deleted";
+            }
+        }
+        header('location:/WikiTM/Category');
+    }
+
+    function getCategory()
+    {
         $id = $_POST['id'];
         $category = new Category();
-        if ($category->deleteRecord($id)) {
-            echo "The category is deleted successfully";
-        } else {
-            echo "The category is not deleted";
-        }
+        $category = $category->selectRecords('*', ' id = ' . $id)[0];
+        echo $category->name;
     }
 }

@@ -50,7 +50,7 @@ class AuthController extends Controller
 
                 setcookie('email', $email, time() + 2 * 33333, '/');
                 setcookie('password', $password, time() + 2 * 33333, '/');
-                header("location:/");
+                header("location:./");
             } else {
                 $errors['data'] = "Incorrect email or password!";
             }
@@ -96,6 +96,6 @@ class AuthController extends Controller
     function logout()
     {
         session_destroy();
-        header('location:./');
+        header('location:/WikiTM');
     }
 }
