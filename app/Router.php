@@ -10,7 +10,7 @@ class Router
 
     private function addRoute($route, $controller, $action, $method)
     {
-
+        
         $this->routes[$method][$route] = ['controller' => $controller, 'action' => $action, 'middleware' => null];
         return $this;
     }
@@ -65,7 +65,7 @@ class Router
 function abord($code = 404)
 {
     http_response_code($code);
-
+    
     require_once "../View/errors/$code.php";
 
     die;
