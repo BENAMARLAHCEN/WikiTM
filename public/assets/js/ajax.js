@@ -13,6 +13,7 @@ function archive(id) {
                 showConfirmButton: false,
                 timer: 1500
               });
+              $(`#id${id}`).html(`<button type="button" class="btn btn-success" onclick="Publiced(${id})">Accept</button>`);
         },
     });
 }
@@ -31,6 +32,8 @@ function Publiced(id) {
                 showConfirmButton: false,
                 timer: 1500
               });
+              $(`#id${id}`).html(`<button type="button" class="btn btn-danger" onclick="archive(${id})">archived</button>`);
+
         },
     });
 }

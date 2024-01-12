@@ -47,7 +47,7 @@
 
 @media (max-width: 768px) {
   .card-height{
-  max-height: 50vh;
+  max-height: 100vh;
   margin-bottom: 10px;
   }
 

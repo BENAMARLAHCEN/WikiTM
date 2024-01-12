@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">WIKI LIST</h5>
-
+                    <div class=" scrol-table">
                     <table class="table datatable">
                         <thead>
                             <tr>
@@ -29,7 +29,7 @@
                                     <td><?= $wiki->update_date ?></td>
                                     <td>
                                         <?php if ($wiki->archived) { ?>
-                                            <button type="button" class="btn btn-success" onclick="Publiced(<?=$wiki->id?>)">Accept</button>
+                                            <div id="id<?=$wiki->id?>"><button type="button" class="btn btn-success" onclick="Publiced(<?=$wiki->id?>)">Accept</button></div>
                                         <?php } else { ?>
                                             <button type="button" class="btn btn-danger" onclick="archive(<?=$wiki->id?>)">archived</button>
                                         <?php } ?>
@@ -40,6 +40,7 @@
                     </table>
                     <!-- End Table with stripped rows -->
 
+                </div>
                 </div>
             </div>
 
