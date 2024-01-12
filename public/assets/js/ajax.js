@@ -62,3 +62,32 @@ function Filter() {
         },
     });
 }
+
+
+function getCategory(id) {
+    $.ajax({
+        url: "http://localhost/WikiTM/getCategory",
+        method: "post",
+        data: {
+            id: id
+        },
+        success: function (data) {
+            $('#categoryName').val(data);
+            $('#categoryid').val(id);
+        }
+    });
+}
+
+function getTag(id) {
+    $.ajax({
+        url: "http://localhost/WikiTM/getTag",
+        method: "post",
+        data: {
+            id: id
+        },
+        success: function (data) {
+            $('#TagName').val(data);
+            $('#Tagid').val(id);
+        }
+    });
+}
