@@ -34,3 +34,31 @@ function Publiced(id) {
         },
     });
 }
+
+
+function FilterByCategory(id) {
+    $.ajax({
+        url: "http://localhost/WikiTM/FilterByCategory",
+        method: "post",
+        data: {
+            category: id
+        },
+        success: function (data) {
+            $('#wiki-card').html(data);
+        }, 
+    });
+}
+
+function Filter() {
+    var text = $('#searchWiki').val();
+    $.ajax({
+        url: "http://localhost/WikiTM/FilterByTagTitle",
+        method: "post",
+        data: {
+            search : text
+        },
+        success: function (data) {
+            $('#wiki-card').html(data);
+        },
+    });
+}

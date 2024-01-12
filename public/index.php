@@ -1,8 +1,12 @@
 <?php
+session_start();
 require '../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "./../");
 $dotenv->load();
+define('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR);
+define('SCRIPTS', dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR);
 
-// print_r($_ENV);
-$router = require '../app/Routers/index.php';
+require '../app/config/Config.php';
+
+$router = require '../app/Router/index.php';
