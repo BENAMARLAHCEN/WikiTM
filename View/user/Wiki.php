@@ -1,3 +1,31 @@
+<?php
+if (isset($_SESSION["valid"])) {
+    echo "
+    <script>
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '$_SESSION[valid]',
+        showConfirmButton: false,
+        timer: 1500
+    });
+</script>
+    ";
+    unset($_SESSION["valid"]);
+}
+if (isset($_SESSION["errors"])) {
+    echo "
+    <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '$_SESSION[errors]'
+    });
+</script>
+    ";
+    unset($_SESSION["errors"]);
+}
+?>
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
@@ -5,7 +33,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">WIKI LIST</h5>
-                    <a href="<?= BS_URI ?>/addWiki" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="bi bi-clipboard-plus"></i></a>
+                    <a href="AddWiki" class="btn btn-dark"><i class="bi bi-clipboard-plus"></i></a>
 
                     <table class="table datatable">
                         <thead>

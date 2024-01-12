@@ -1,3 +1,33 @@
+<?php
+if (isset($_SESSION["valid"])) {
+    echo "
+    <script>
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '$_SESSION[valid]',
+        showConfirmButton: false,
+        timer: 1500
+    });
+</script>
+    ";
+    unset($_SESSION["valid"]);
+}
+if (isset($_SESSION["errors"])) {
+    echo "
+    <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '$_SESSION[errors]'
+    });
+</script>
+    ";
+    unset($_SESSION["errors"]);
+}
+?>
+
+
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
@@ -18,17 +48,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($category as $cat){?>
-                            <tr>
-                                <td><?=$cat->id?></td>
-                                <td><?=$cat->name?></td>
-                                <td><?=$cat->create_date?></td>
-                                <td><?=$cat->update_date?></td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i></button>
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-eraser"></i></button>
-                                </td>
-                            </tr>
+                            <?php foreach ($category as $cat) { ?>
+                                <tr>
+                                    <td><?= $cat->id ?></td>
+                                    <td><?= $cat->name ?></td>
+                                    <td><?= $cat->create_date ?></td>
+                                    <td><?= $cat->update_date ?></td>
+                                    <td>
+                                        <button type="button" onclick="getCategory(<?= $cat->id ?>)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i></button>
+                                        <form action="./Category/delete" method="post"><button type="submit" name="delete" value="<?= $cat->id ?>" class="btn btn-danger"><i class="bi bi-eraser"></i></button></form>
+                                    </td>
+                                </tr>
                             <?php } ?>
                         </tbody>
                     </table>
@@ -50,7 +80,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Floating Labels Form -->
-            <form class="row g-3" method="post" action="Category/insert" >
+            <form class="row g-3" method="post" action="Category/insert">
                 <div class="modal-body">
 
                     <div class="col-md-12">
@@ -71,6 +101,8 @@
     </div>
 </div><!-- END Modal-->
 
+
+
 <!-- update modal -->
 
 <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -81,16 +113,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Floating Labels Form -->
-            <form class="row g-3"  method="post" action="Category/update">
+            <form class="row g-3" method="post" action="Category/update">
                 <div class="modal-body">
 
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <input type="text" name="name" class="form-control" id="floatingName" placeholder="Category Name">
-                            <label for="floatingName">Category Name</label>
+                            <input type="text" name="name" class="form-control" id="categoryName" placeholder="Category Name">
+                            <label for="categoryName">Category Name</label>
                         </div>
                     </div>
-                    <input type="hidden" name="id" value="2">
+                    <input type="hidden" name="id" id="categoryid">
 
                 </div>
                 <div class="modal-footer text-center">

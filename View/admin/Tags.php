@@ -1,3 +1,31 @@
+<?php
+if (isset($_SESSION["valid"])) {
+    echo "
+    <script>
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '$_SESSION[valid]',
+        showConfirmButton: false,
+        timer: 1500
+    });
+</script>
+    ";
+    unset($_SESSION["valid"]);
+}
+if (isset($_SESSION["errors"])) {
+    echo "
+    <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '$_SESSION[errors]'
+    });
+</script>
+    ";
+    unset($_SESSION["errors"]);
+}
+?>
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
@@ -25,8 +53,8 @@
                                 <td><?=$tag->create_date?></td>
                                 <td><?=$tag->update_date?></td>
                                 <td>
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i></button>
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-eraser"></i></button>
+                                <button type="button" onclick="getTag(<?= $tag->id ?>)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i></button>
+                                <form action="./Tags/delete" method="post"><button type="submit" name="delete" value="<?= $tag->id ?>" class="btn btn-danger"><i class="bi bi-eraser"></i></button></form>
                                 </td>
                             </tr>
                             <?php } ?>
@@ -87,7 +115,7 @@
                             <label for="TagName">Tag Name</label>
                         </div>
                     </div>
-                    <input id="tagID" type="hidden" name="id" value="2">
+                    <input id="Tagid" type="hidden" name="id" >
 
                 </div>
                 <div class="modal-footer text-center">
