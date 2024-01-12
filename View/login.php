@@ -50,13 +50,13 @@
                   if (isset($errors['data'])) {
                   ?>
                     <div class="alert alert-warning bg-warning border-0 alert-dismissible fade show" role="alert">
-                      <?=$errors['data']?>
+                      <?= $errors['data'] ?>
                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                   <?php
-                  } ?> 
+                  } ?>
 
-                  <form class="row g-3 " method="post">
+                  <form id="formlogin" class="row g-3 " method="post">
 
                     <div class="col-12">
                       <label for="youremail" class="form-label">Email</label>
@@ -86,6 +86,45 @@
                       <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
                     </div>
                   </form>
+                  <script>
+                    document.getElementById('formlogin').addEventListener('submit', function(event) {
+
+                      var email = document.getElementById('yourEmail');
+                      var password = document.getElementById('yourPassword');
+
+                      if (!isValidEmail(email.value)) {
+                        email.classList.add('is-invalid');
+                        email.classList.remove('is-valid');
+                        event.preventDefault();
+                      } else {
+                        email.classList.add('is-valid');
+                        email.classList.remove('is-invalid');
+                      }
+
+                      if (!isValidPassword(password.value)) {
+                        password.classList.add('is-invalid');
+                        password.classList.remove('is-valid');
+                        event.preventDefault();
+                      } else {
+                        password.classList.add('is-valid');
+                        password.classList.remove('is-invalid');
+                      }
+                      
+
+                    });
+
+                    function isValidEmail(email) {
+                      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                      return emailRegex.test(email);
+                    }
+
+                    function isValidPassword(password) {
+                      var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+                      return passwordRegex.test(password);
+                    }
+
+                    
+                  </script>
 
                 </div>
               </div>

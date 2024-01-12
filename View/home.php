@@ -52,12 +52,14 @@
                             <p class="text-uppercase"> <?= $wiki->name ?></p>
                             <h3><?= $wiki->title ?></h3>
 
-                            <div class=" mr-2">
+                            <div class=" mr-2 overflow-hidden">
                                 <div><?= $wiki->username ?> . <?= $wiki->create_date ?></div>
-                                <p class="text-justify text-truncate para mb-0 white-space-wrap"><?= $wiki->content ?><br><br></p>
-
+                                <p class="text-justify text-truncate para mb-0 "><?= $wiki->content ?><br><br></p>
                             </div>
 
+                        </div>
+                        <div class=" card-footer">
+                            <a class="btn btn-outline-secondary" href="/WikiTM/wikiDetail?wk=<?= $wiki->id ?>">Read More</a>
                         </div>
                     </div>
                 </div>

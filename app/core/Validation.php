@@ -6,23 +6,17 @@ class Validation
 {
     public static function verfyEmail($email)
     {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
-        return true;
+        return !filter_var($email, FILTER_VALIDATE_EMAIL);
     }
     public static function verfyName($name)
     {
-        if (!preg_match('/^[a-zA-Z]+$/', $name)) {
-            return false;
-        }
-        return true;
+        return preg_match("/^[a-zA-Z-']+$/", $name);
     }
     public static function verfyPassword($password)
     {
-        if (!preg_match('/^[0-9a-zA-Z.\-_&$@*%!\/]{8,50}+$/', $password)) {
-            return false;
-        }
-        return true;
+        return !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password);
+    }
+    public static function confirm($valueA,$valueB){
+        return $valueA === $valueB;
     }
 }
