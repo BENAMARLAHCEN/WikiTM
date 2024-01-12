@@ -34,7 +34,7 @@ if (isset($_SESSION["errors"])) {
                 <div class="card-body">
                     <h5 class="card-title">TAGS LIST</h5>
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="bi bi-clipboard-plus"></i></button>
-
+                    <div class=" scrol-table">
                     <table class="table datatable">
                         <thead>
                             <tr>
@@ -62,6 +62,7 @@ if (isset($_SESSION["errors"])) {
                     </table>
                     <!-- End Table with stripped rows -->
 
+                </div>
                 </div>
             </div>
 

@@ -10,31 +10,31 @@
         if (Helper::hasrole(['admin'])) :
         ?>
             <li class="nav-item">
-                <a class="nav-link <?php if ($URI[0] !== 'Overview') echo 'collapsed' ?>" href="/WikiTM/Dashboard">
+                <a class="nav-link collapsed" href="/WikiTM/Dashboard">
                     <i class="bi bi-graph-up-arrow"></i>
                     <span>Statistiques </span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php if ($URI[0] !== 'Team') echo 'collapsed' ?>" href="<?= BS_URI ?>/Category">
+                <a class="nav-link collapsed" href="<?= BS_URI ?>/Category">
                     <i class="bi bi-grid"></i>
                     <span>Categories</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php if ($URI[0] !== 'Match') echo 'collapsed' ?>" href="<?= BS_URI ?>/Tags">
+                <a class="nav-link collapsed" href="<?= BS_URI ?>/Tags">
                     <i class="bi bi-tags-fill"></i>
                     <span>Tags</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link <?php if ($URI[0] !== 'User') echo 'collapsed' ?>" href="<?= BS_URI ?>/Wiki">
+                <a class="nav-link collapsed" href="<?= BS_URI ?>/Wiki">
                     <i class="bi bi-file-post-fill"></i>
                     <span>Wiki Management</span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link <?php if ($URI[0] !== 'User') echo 'collapsed' ?>" href="<?= BS_URI ?>/Users">
+                <a class="nav-link collapsed" href="<?= BS_URI ?>/Users">
                     <i class="bi bi-people-fill"></i>
                     <span>Users</span>
                 </a>

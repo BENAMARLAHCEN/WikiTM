@@ -36,34 +36,34 @@ if (isset($_SESSION["errors"])) {
                 <div class="card-body">
                     <h5 class="card-title">CATEGORY LIST</h5>
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="bi bi-clipboard-plus"></i></button>
-
-                    <table class="table datatable">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th data-type="date" data-format="YYYY-DD-MM H:M:S">Create Date</th>
-                                <th data-type="date" data-format="YYYY-DD-MM H:M:S">Update Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($category as $cat) { ?>
+                    <div class=" scrol-table">
+                        <table class="table datatable">
+                            <thead>
                                 <tr>
-                                    <td><?= $cat->id ?></td>
-                                    <td><?= $cat->name ?></td>
-                                    <td><?= $cat->create_date ?></td>
-                                    <td><?= $cat->update_date ?></td>
-                                    <td>
-                                        <button type="button" onclick="getCategory(<?= $cat->id ?>)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i></button>
-                                        <form action="./Category/delete" method="post"><button type="submit" name="delete" value="<?= $cat->id ?>" class="btn btn-danger"><i class="bi bi-eraser"></i></button></form>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th data-type="date" data-format="YYYY-DD-MM H:M:S">Create Date</th>
+                                    <th data-type="date" data-format="YYYY-DD-MM H:M:S">Update Date</th>
+                                    <th>Action</th>
                                 </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                    <!-- End Table with stripped rows -->
-
+                            </thead>
+                            <tbody>
+                                <?php foreach ($category as $cat) { ?>
+                                    <tr>
+                                        <td><?= $cat->id ?></td>
+                                        <td><?= $cat->name ?></td>
+                                        <td><?= $cat->create_date ?></td>
+                                        <td><?= $cat->update_date ?></td>
+                                        <td>
+                                            <button type="button" onclick="getCategory(<?= $cat->id ?>)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i></button>
+                                            <form action="./Category/delete" method="post"><button type="submit" name="delete" value="<?= $cat->id ?>" class="btn btn-danger"><i class="bi bi-eraser"></i></button></form>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+                    </div>
                 </div>
             </div>
 
