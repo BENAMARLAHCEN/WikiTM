@@ -47,7 +47,7 @@
                                         <p class="text-center small">Enter your personal details to create account</p>
                                     </div>
                                     <?php
-                                    if (isset($errors['data'])){
+                                    if (isset($errors['data'])) {
                                     ?>
                                         <div class="alert alert-warning bg-warning border-0 alert-dismissible fade show" role="alert">
                                             insert all your information
@@ -56,7 +56,7 @@
                                     <?php
                                     } ?>
 
-                                    <form class="row g-3 needs-validation" method="post" enctype="multipart/form-data">
+                                    <form id="formSinup" class="row g-3 needs-validation" method="post" enctype="multipart/form-data">
                                         <div class="col-12">
                                             <label for="yourName" class="form-label">Your Name</label>
                                             <input type="text" name="username" class="form-control" id="yourName" required>
@@ -77,7 +77,7 @@
                                         <div class="col-12">
                                             <label for="yourimage" class="form-label">Image</label>
                                             <input type="file" name="image" class="form-control" id="yourimage">
-                                            <div class="text-danger"><?php if (isset($errors['image'])) echo $errors['image']; ?></div>
+                                            <div id="Error-image" class="text-danger"><?php if (isset($errors['image'])) echo $errors['image']; ?></div>
                                         </div>
 
                                         <div class="col-12">
@@ -94,6 +94,80 @@
                                             <p class="small mb-0">Already have an account? <a href="pages-login.html">Log in</a></p>
                                         </div>
                                     </form>
+                                    <script>
+                                        document.getElementById('formSinup').addEventListener('submit', function(event) {
+
+                                            var name = document.getElementById('yourName');
+                                            var email = document.getElementById('yourEmail');
+                                            var password = document.getElementById('yourPassword');
+                                            var imageInput = document.getElementById("yourimage");
+                                            var imageM = document.getElementById("Error-image");
+
+
+                                            if (!isValidEmail(email.value)) {
+                                                email.classList.add('is-invalid');
+                                                email.classList.remove('is-valid');
+                                                event.preventDefault();
+                                            } else {
+                                                email.classList.add('is-valid');
+                                                email.classList.remove('is-invalid');
+                                            }
+
+                                            if (!isValidPassword(password.value)) {
+                                                password.classList.add('is-invalid');
+                                                password.classList.remove('is-valid');
+                                                event.preventDefault();
+                                            } else {
+                                                password.classList.add('is-valid');
+                                                password.classList.remove('is-invalid');
+                                            }
+
+                                            if (!isValidName(name.value)) {
+                                                name.classList.add('is-invalid');
+                                                name.classList.remove('is-valid');
+                                                event.preventDefault();
+                                            } else {
+                                                name.classList.add('is-valid');
+                                                name.classList.remove('is-invalid');
+                                            }
+                                            if (!validateImage(imageInput.value)) {
+                                                imageInput.classList.add('is-invalid');
+                                                imageInput.classList.remove('is-valid');
+                                                imageM.innerHTML = "Veuillez sélectionner un fichier avec une extension valide(JPG, JPEG, PNG, SVG).";
+                                                event.preventDefault();
+                                            } else {
+                                                imageInput.classList.add('is-valid');
+                                                imageInput.classList.remove('is-invalid');
+                                                imageM.innerHTML = "";
+                                            }
+
+                                        });
+                                        
+
+                                        function isValidName(name) {
+                                            var nameRegex = /^[A-Za-z\s]+$/;
+                                            return nameRegex.test(name);
+                                        }
+
+                                        function isValidEmail(email) {
+                                            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                            return emailRegex.test(email);
+                                        }
+
+                                        function isValidPassword(password) {
+                                            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+                                            return passwordRegex.test(password);
+                                        }
+
+                                        function validateImage(image) {
+                                            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
+                                            if (!allowedExtensions.exec(image)) {
+                                                return false;
+                                            } else {
+                                                return true;
+                                            }
+                                        }
+                                    </script>
 
                                 </div>
                             </div>
