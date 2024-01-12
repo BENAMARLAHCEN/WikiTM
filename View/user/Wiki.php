@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">WIKI LIST</h5>
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="bi bi-clipboard-plus"></i></button>
+                    <a href="<?= BS_URI ?>/addWiki" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="bi bi-clipboard-plus"></i></a>
 
                     <table class="table datatable">
                         <thead>
@@ -36,7 +36,7 @@
                                     <td><?= $wiki->update_date ?></td>
                                     <td>
                                         <a href="EditWiki?id=<?= $wiki->id ?>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
-                                        <button type="button" class="btn btn-danger"><i class="bi bi-eraser"></i></button>
+                                        <form method="post"><button type="submit" class="btn btn-danger" name="delete" value="<?= $wiki->id ?>"><i class="bi bi-eraser"></i></button></form>
                                     </td>
                                 </tr>
                             <?php } ?>
