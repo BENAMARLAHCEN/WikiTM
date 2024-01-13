@@ -33,7 +33,7 @@
             ?>
                 <div class="nav-item d-flex gap-2">
                     <a href="<?= BS_URI ?>/login" class="btn btn-outline-secondary">Login</a>
-                    <a href="<?= BS_URI ?>/sinup" class="btn btn-secondary">Sinup</a>
+                    <a href="<?= BS_URI ?>/signup" class="btn btn-secondary">Sinup</a>
                 </div>
             <?php endif;
             if (Helper::hasrole(['admin', 'author'])) : ?>

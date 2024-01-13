@@ -56,7 +56,7 @@
                                     <?php
                                     } ?>
 
-                                    <form id="formSinup" class="row g-3 needs-validation" method="post" enctype="multipart/form-data">
+                                    <form id="formSinup" action="/WikiTM/signup" class="row g-3 needs-validation" method="post" enctype="multipart/form-data">
                                         <div class="col-12">
                                             <label for="yourName" class="form-label">Your Name</label>
                                             <input type="text" name="username" class="form-control" id="yourName" required>
