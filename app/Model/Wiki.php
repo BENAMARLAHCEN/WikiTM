@@ -14,7 +14,19 @@ class Wiki extends Model
         return $this->selectRecords('COUNT(*) as COUNT');
     }
 
-    public function searchByTagCat($search){
+    public function getById($id){
+        return $this->selectRecords('*', 'id =' . $id);
+    }
+
+    public function getAuthorWiki($id){
+        return $this->selectRecords('*', 'author_id =' . $id, 'create_date DESC');
+    }
+
+    public function selectAll(){
+        return $this->selectRecords('*', null, 'create_date DESC');
+    }
+
+    public function searchByTagTitle($search){
         return $this->selectRecords(' DISTINCT wiki.*,category.name,user.username ', "archived = 0 and (wiki.title LIKE ('%$search%') OR tags.name LIKE ('%$search%'))", ' wiki.create_date  ', null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category LEFT JOIN wikitags on wikitags.wiki_id = wiki.id LEFT JOIN tags ON tags.id = wikitags.tag_id');
     }
     public function getByCategory($categoryId){

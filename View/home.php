@@ -41,7 +41,7 @@
 
 <section class="wiki-section">
     <div class="container mt-5 mb-5">
-        <div class="d-flex justify-content-center row" id="wiki-card">
+        <div class="d-flex justify-content-center row gap-3" id="wiki-card">
             <?php foreach ($wikis as $wiki) :  ?>
                 <div class="col-md-10 overflow-hidden">
                     <div class="row p-2 bg-white border rounded card-height">
@@ -54,13 +54,13 @@
 
                             <div class=" mr-2 overflow-hidden">
                                 <div><?= $wiki->username ?> . <?= $wiki->create_date ?></div>
-                                <p class="text-justify text-truncate para mb-0 "><?= $wiki->content ?><br><br></p>
-                            </div>
 
+                            </div>
+                            <div class=" card-footer float-end">
+                                <a class="btn btn-outline-secondary" href="/WikiTM/wikiDetail?wk=<?= $wiki->id ?>">Read More</a>
+                            </div>
                         </div>
-                        <div class=" card-footer">
-                            <a class="btn btn-outline-secondary" href="/WikiTM/wikiDetail?wk=<?= $wiki->id ?>">Read More</a>
-                        </div>
+
                     </div>
                 </div>
             <?php endforeach; ?>

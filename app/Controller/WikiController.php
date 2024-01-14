@@ -14,7 +14,7 @@ class WikiController extends Controller
     function index()
     {
         $wikis = new Wiki();
-        $wikis = $wikis->selectRecords('*', null, 'create_date DESC');
+        $wikis = $wikis->selectAll();
         $this->view('admin/wiki', compact('wikis'));
     }
 
@@ -23,7 +23,7 @@ class WikiController extends Controller
         if (isset($_POST['id'])) {
             $id = $_POST['id'];
             $wikis = new Wiki();
-            $wiki = $wikis->selectRecords('*', 'id = ' . $id);
+            $wiki = $wikis->getById($id);
             if ($wiki != null) {
                 if ($wikis->updateRecord(['archived' => 1], $id)) {
                     echo "The wiki is archived successfully";
@@ -40,7 +40,7 @@ class WikiController extends Controller
         if (isset($_POST['id'])) {
             $id = $_POST['id'];
             $wikis = new Wiki();
-            $wiki = $wikis->selectRecords('*', 'id = ' . $id);
+            $wiki = $wikis->getById($id);
             if ($wiki != null) {
                 if ($wikis->updateRecord(['archived' => 0], $id)) {
                     echo "The wiki is public successfully";
@@ -56,7 +56,7 @@ class WikiController extends Controller
     function authorWiki()
     {
         $wikis = new Wiki();
-        $wikis = $wikis->selectRecords('*', 'author_id =' . $_SESSION['userId'], 'create_date DESC');
+        $wikis = $wikis->getAuthorWiki($_SESSION['userId']);
         $this->view('user/Wiki', compact('wikis'));
     }
 

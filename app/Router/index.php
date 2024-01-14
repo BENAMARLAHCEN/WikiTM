@@ -12,13 +12,6 @@ use App\Router;
 
 $router = new Router();
 
-$router->get(BS_URI . '/', HomeController::class, 'index');
-$router->get(BS_URI . '/wikiDetail', HomeController::class, 'wikiDetail');
-$router->get(BS_URI . '/login', AuthController::class, 'index')->only('guest');
-$router->get(BS_URI . '/signup', AuthController::class, 'signupF')->only('guest');
-$router->post(BS_URI . '/login', AuthController::class, 'login')->only('guest');
-$router->post(BS_URI . '/signup', AuthController::class, 'signup')->only('guest');
-$router->get(BS_URI . '/logout', AuthController::class, 'logout');
 
 $router->get(BS_URI . '/Dashboard', DashController::class, 'index')->only('admin');
 
@@ -49,13 +42,26 @@ $router->post(BS_URI . '/EditWiki', WikiController::class, 'update')->only('auth
 $router->post(BS_URI . '/deleteWiki', WikiController::class, 'delete')->only('author');
 
 
-$router->post(BS_URI . '/FilterByCategory', FilterController::class, 'FilterByCategory');
-$router->post(BS_URI . '/FilterByTagTitle', FilterController::class, 'search');
-
 
 $router->get(BS_URI . '/Profile', ProfileController::class, 'index')->only('author');
 $router->post(BS_URI . '/Profile/update', ProfileController::class, 'update')->only('author');
 $router->post(BS_URI . '/UpdatePassword', ProfileController::class, 'updatePassword')->only('author');
 
+
+$router->get(BS_URI . '/login', AuthController::class, 'index')->only('guest');
+$router->get(BS_URI . '/signup', AuthController::class, 'signupF')->only('guest');
+$router->post(BS_URI . '/login', AuthController::class, 'login')->only('guest');
+$router->post(BS_URI . '/signup', AuthController::class, 'signup')->only('guest');
+
+
+$router->get(BS_URI . '/', HomeController::class, 'index');
+$router->get(BS_URI . '/wikiDetail', HomeController::class, 'wikiDetail');
+
+
+$router->post(BS_URI . '/FilterByCategory', FilterController::class, 'FilterByCategory');
+$router->post(BS_URI . '/FilterByTagTitle', FilterController::class, 'search');
+
+
+$router->get(BS_URI . '/logout', AuthController::class, 'logout');
 
 $router->dispatch();
