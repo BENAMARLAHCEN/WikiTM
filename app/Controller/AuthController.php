@@ -35,10 +35,8 @@ class AuthController extends Controller
 
         if (count($errors) == 0) {
             $user = new User();
-            $userdata = $user->selectRecords('*', "email = '$email'");
-            var_dump($userdata);
+            $userdata = $user->selectByemail($email);
             if (count($userdata) == 0) {
-                var_dump($userdata);
                 $errors['data'] = "It's look like you're not yet a member! Click on the bottom link to signup.";
             } else if (password_verify($password, $userdata[0]->password)) {
 
@@ -78,7 +76,7 @@ class AuthController extends Controller
         }
         if (count($errors) == 0) {
             $user = new User();
-            if (count($user->selectRecords('*', "email = '$email'")) != 0) {
+            if (count($user->selectByemail($email)) != 0) {
                 $errors['data'] = "this email already exists";
             } else {
                 $password = password_hash($password, PASSWORD_BCRYPT);

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller;
+use App\core\Session;
 use App\Model\Category;
 use App\Model\Tag;
 use App\Model\Wiki;
@@ -25,7 +26,7 @@ class WikiController extends Controller
             $wikis = new Wiki();
             $wiki = $wikis->getById($id);
             if ($wiki != null) {
-                if ($wikis->updateRecord(['archived' => 1], $id)) {
+                if ($wikis->changeStatus(1,$id)) {
                     echo "The wiki is archived successfully";
                 } else {
                     echo "The wiki is not find";
@@ -42,7 +43,7 @@ class WikiController extends Controller
             $wikis = new Wiki();
             $wiki = $wikis->getById($id);
             if ($wiki != null) {
-                if ($wikis->updateRecord(['archived' => 0], $id)) {
+                if ($wikis->changeStatus(0,$id)) {
                     echo "The wiki is public successfully";
                 } else {
                     echo "The wiki is not find";
@@ -73,7 +74,7 @@ class WikiController extends Controller
     {
         $id = $_GET['id'];
         $wikis = new Wiki();
-        $wiki = $wikis->selectRecords('*', 'id =' . $id);
+        $wiki = $wikis->getById($id);
         if (count($wiki) == 0) {
             header('location:MyWiki');
             exit();
@@ -130,7 +131,7 @@ class WikiController extends Controller
         $wiki = new Wiki();
         $wikitags = new WikiTag();
         $update_date = date('Y-m-d H:i:s');
-        if (count($wiki->selectRecords('*', 'id = ' . $id . ' and author_id = ' . $_SESSION['userId']))) {
+        if (count($wiki->WikiAuthor($id, Session::get('userId')))) {
             if ($wiki->updateRecord(compact('title', 'content', 'category', 'update_date'), $id)) {
                 $_SESSION["valid"] = "The wiki is updated successfully";
                 $wikitags->deleteRecord($id);
@@ -158,7 +159,7 @@ class WikiController extends Controller
             $id = $_POST['delete'];
 
             $wiki = new Wiki();
-            if (count($wiki->selectRecords('*', 'id = ' . $id . ' and author_id = ' . $_SESSION['userId']))) {
+            if (count($wiki->WikiAuthor($id,Session::get('userId')))) {
                 if ($wiki->deleteRecord($id)) {
                     $_SESSION["valid"] = "The wiki is deleted successfully";
                 } else {

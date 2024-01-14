@@ -27,10 +27,11 @@ $router->post(BS_URI . '/Tags/update', TagController::class, 'update')->only('ad
 $router->post(BS_URI . '/Tags/delete', TagController::class, 'delete')->only('admin');
 $router->post(BS_URI . '/getTag', TagController::class, 'getTag')->only('admin');
 
-
 $router->get(BS_URI . '/Wiki', WikiController::class, 'index')->only('admin');
-$router->post(BS_URI . '/archive', WikiController::class, 'archive')->only('admin');
 $router->post(BS_URI . '/accept', WikiController::class, 'public')->only('admin');
+
+$router->post(BS_URI . '/archive', WikiController::class, 'archive')->only('admin');
+
 
 
 $router->get(BS_URI . '/MyWiki', WikiController::class, 'authorWiki')->only('author');

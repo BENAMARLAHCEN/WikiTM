@@ -10,14 +10,14 @@ class TagController extends Controller
     function index()
     {
         $tags = new Tag();
-        $tags = $tags->selectRecords('*', null, 'create_date DESC');
+        $tags = $tags->getAllTag();
         $this->view('admin/Tags', compact('tags'));
     }
     function insert()
     {
         $name = $_POST['name'];
         $tag = new Tag();
-        if ($tag->insertRecord(['name' => $name])) {
+        if ($tag->insertTag($name)) {
             $_SESSION["valid"] =  "The tag is inserted successfully";
         } else {
             $_SESSION["errors"] = "The tag is not inserted";
@@ -32,13 +32,13 @@ class TagController extends Controller
         $id = $_POST['id'];
         $tag = new Tag();
         $currentDate = date('Y-m-d H:i:s');
-        if ($tag->updateRecord(['name' => $name, 'update_date' => $currentDate], $id)) {
+        if ($tag->updateTag($name, $id)) {
             $_SESSION["valid"] =  "The tag is updated successfully";
         } else {
             $_SESSION["errors"] = "The tag is not updated";
         }
         header('location:/WikiTM/Tags');
-
+        
     }
 
     function delete()

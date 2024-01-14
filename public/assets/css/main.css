@@ -30,6 +30,20 @@
 
 
 /* wiki section  */
+#searchWiki {
+  width: 100%;
+  max-width: 400px; /* Adjust the maximum width as needed */
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.btn-category {
+  margin: 5px;
+}
+
+
 .white-space-wrap{
   white-space: wrap !important;
 }

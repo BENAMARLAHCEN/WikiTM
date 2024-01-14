@@ -28,13 +28,13 @@
 <section id="Wiki" class="search-section mt-5">
     <div class="container d-flex flex-column align-items-center">
         <div class="fw-bold h1 text-black">Search for Wiki</div>
-        <input type="search" name="search" oninput="Filter()" id="searchWiki">
-        <!-- category  -->
-        <div class="d-flex gap-2 flex-wrap justify-content-center">
-            <?php foreach ($category as $cat) :  ?>
-                <button onclick="FilterByCategory(<?= $cat->id ?>)" class="btn badge-soft-secondary"><?= $cat->name ?></button>
-            <?php endforeach; ?>
-        </div>
+        <input type="search" name="search" oninput="Filter()" id="searchWiki" class="form-control">
+            <!-- category  -->
+            <div class="d-flex gap-2 flex-wrap justify-content-center">
+                <?php foreach ($category as $cat) :  ?>
+                    <button onclick="FilterByCategory(<?= $cat->id ?>)" class="btn btn-outline-secondary btn-category"><?= $cat->name ?></button>
+                <?php endforeach; ?>
+            </div>
     </div>
 </section>
 

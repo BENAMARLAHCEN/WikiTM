@@ -10,7 +10,7 @@ class CategoryController extends Controller
     function index()
     {
         $category = new Category();
-        $category = $category->selectRecords('*', null, 'create_date DESC');
+        $category = $category->getAllCategory();
         $this->view('admin/Category', compact('category'));
     }
 
@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         $name = $_POST['name'];
         $category = new Category();
-        if ($category->insertRecord(['name' => $name])) {
+        if ($category->insertCategory($name)) {
             $_SESSION["valid"] = "The category is inserted successfully";
         } else {
             $_SESSION["errors"] =  "The category is not inserted";
@@ -30,8 +30,7 @@ class CategoryController extends Controller
         $name = $_POST['name'];
         $id = $_POST['id'];
         $category = new Category();
-        $currentDate = date('Y-m-d H:i:s');
-        if ($category->updateRecord(['name' => $name, 'update_date' => $currentDate], $id)) {
+        if ($category->updateCategory($name,$id)) {
             $_SESSION["valid"] = "The category is updated successfully";
         } else {
             $_SESSION["errors"] = "The category is not updated";

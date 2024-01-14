@@ -12,11 +12,11 @@ class HomeController extends Controller
     function index()
     {
         $wikis = new Wiki();
-        $wikis = $wikis->selectRecords(' wiki.*,category.name,user.username ', 'archived = 0', ' wiki.create_date limit 4 ', null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category ');
+        $wikis = $wikis->getWikiData();
         $tags = new Tag();
-        $tags = $tags->selectRecords('*', null, 'create_date DESC');
+        $tags = $tags->getAllTag();
         $category = new Category();
-        $category = $category->selectRecords('*', null, 'create_date DESC');
+        $category = $category->getAllCategory();
         $this->view('home', compact('wikis', 'tags', 'category'), 'main');
     }
 
@@ -25,10 +25,10 @@ class HomeController extends Controller
         if (isset($_GET['wk']) && !empty($_GET['wk'])) {
             $id = $_GET['wk'];
             $wikis = new Wiki();
-            $wiki = $wikis->selectRecords(' wiki.*,category.name,user.username,user.about,user.image,user.Job ', 'wiki.id = ' . $id, null, null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category ');
+            $wiki = $wikis->getWikiDetail($id);
             $wikiId = $wiki[0]->id;
             $tags = new Tag();
-            $tags = $tags->selectRecords('*', " wikitags.wiki_id = $wikiId ", null , null, " INNER JOIN wikitags on wikitags.tag_id = tags.id");
+            $tags = $tags->getWikiTag($wikiId);
 
             if (count($wiki) != 0) {
                 $wikis->addView($wikiId);
