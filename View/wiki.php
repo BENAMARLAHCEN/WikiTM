@@ -15,7 +15,7 @@
             <div class="col-lg-3  col-md-12 flex-md-wrap-reverse">
                 <h3 class=" mt-4 mb-3 text-opacity-75">ABOUT THE AUTHOR</h3>
                 <div class="row">
-                    <div class="d-flex  justify-content-center h-100 col-lg-12 col-md-3 mb-lg-4 col-sm-4">
+                    <div class="d-flex  justify-content-center col-lg-12 col-md-3 mb-lg-4 col-sm-4">
                         <img src="./assets/upload/user/<?= $wiki->image ?>" alt="auhtor image" class=" w-75 img-fluid rounded-circle">
                     </div>
                     <div class="col-sm-8 col-lg-12 col-md-9">

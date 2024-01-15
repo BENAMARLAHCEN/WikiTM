@@ -89,7 +89,7 @@
                   <script>
                     document.getElementById('formlogin').addEventListener('submit', function(event) {
 
-                      var email = document.getElementById('yourEmail');
+                      var email = document.getElementById('youremail');
                       var password = document.getElementById('yourPassword');
 
                       if (!isValidEmail(email.value)) {
@@ -109,7 +109,7 @@
                         password.classList.add('is-valid');
                         password.classList.remove('is-invalid');
                       }
-                      
+
 
                     });
 
@@ -122,8 +122,6 @@
                       var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
                       return passwordRegex.test(password);
                     }
-
-                    
                   </script>
 
                 </div>

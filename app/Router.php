@@ -8,21 +8,21 @@ class Router
 {
     protected $routes = [];
 
-    private function addRoute($route, $controller, $action, $method)
+    private function addRoute($route, $controller, $action, $method, $middleware)
     {
-        
-        $this->routes[$method][$route] = ['controller' => $controller, 'action' => $action, 'middleware' => null];
+
+        $this->routes[$method][$route] = ['controller' => $controller, 'action' => $action, 'middleware' => $middleware];
         return $this;
     }
 
-    public function get($route, $controller, $action)
+    public function get($route, $controller, $action, $middleware = null)
     {
-        return $this->addRoute($route, $controller, $action, "GET");
+        return $this->addRoute($route, $controller, $action, "GET",$middleware);
     }
 
-    public function post($route, $controller, $action)
+    public function post($route, $controller, $action, $middleware = null)
     {
-        return $this->addRoute($route, $controller, $action, "POST");
+        return $this->addRoute($route, $controller, $action, "POST",$middleware);
     }
 
     public function only($key)
@@ -30,7 +30,7 @@ class Router
         $lastMethod = array_key_last($this->routes);
         if ($lastMethod !== null) {
             $lastRoute = end($this->routes[$lastMethod]);
-            
+
 
             if ($lastRoute !== false) {
                 $lastKey = key($this->routes[$lastMethod]);
@@ -65,7 +65,7 @@ class Router
 function abord($code = 404)
 {
     http_response_code($code);
-    
+
     require_once "../View/errors/$code.php";
 
     die;

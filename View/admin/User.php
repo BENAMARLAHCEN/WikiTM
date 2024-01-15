@@ -1,38 +1,10 @@
-<?php
-if (isset($_SESSION["valid"])) {
-    echo "
-    <script>
-    Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '$_SESSION[valid]',
-        showConfirmButton: false,
-        timer: 1500
-    });
-</script>
-    ";
-    unset($_SESSION["valid"]);
-}
-if (isset($_SESSION["errors"])) {
-    echo "
-    <script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: '$_SESSION[errors]'
-    });
-</script>
-    ";
-    unset($_SESSION["errors"]);
-}
-?>
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">TAGS LIST</h5>
+                    <h5 class="card-title">CATEGORY LIST</h5>
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="bi bi-clipboard-plus"></i></button>
                     <div class=" scrol-table">
                     <table class="table datatable">
@@ -46,23 +18,20 @@ if (isset($_SESSION["errors"])) {
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach($tags as $tag){?>
                             <tr>
-                                <td><?=$tag->id?></td>
-                                <td><?=$tag->name?></td>
-                                <td><?=$tag->create_date?></td>
-                                <td><?=$tag->update_date?></td>
+                                <td>Unity Pugh</td>
+                                <td>9958</td>
+                                <td>2005-02-11 22:19:47</td>
+                                <td>2005-02-11 22:19:47</td>
                                 <td>
-                                <button type="button" onclick="getTag(<?= $tag->id ?>)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i></button>
-                                <form action="./Tags/delete" method="post"><button type="submit" name="delete" value="<?= $tag->id ?>" class="btn btn-danger"><i class="bi bi-eraser"></i></button></form>
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i></button>
+                                    <button type="button" class="btn btn-danger"><i class="bi bi-eraser"></i></button>
                                 </td>
                             </tr>
-                            <?php } ?>
                         </tbody>
                     </table>
                     <!-- End Table with stripped rows -->
 
-                </div>
                 </div>
             </div>
 
@@ -74,17 +43,17 @@ if (isset($_SESSION["errors"])) {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Tag</h5>
+                <h5 class="modal-title">Add Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Floating Labels Form -->
-            <form class="row g-3" id="formTag" method="post" action="Tags/insert">
+            <form class="row g-3">
                 <div class="modal-body">
 
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <input type="text" name="name" class="form-control" id="floatingName" placeholder="Category Name">
-                            <label for="floatingName">Tag Name</label>
+                            <input type="text" class="form-control" id="floatingName" placeholder="Category Name">
+                            <label for="floatingName">Category Name</label>
                         </div>
                     </div>
 
@@ -103,20 +72,20 @@ if (isset($_SESSION["errors"])) {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Tag</h5>
+                <h5 class="modal-title">Edit Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Floating Labels Form -->
-            <form class="row g-3" id="formEdit" method="post" action="Tags/update">
+            <form class="row g-3">
                 <div class="modal-body">
 
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <input type="text" name="name" class="form-control" id="TagName" placeholder="Tag Name">
-                            <label for="TagName">Tag Name</label>
+                            <input type="text" class="form-control" id="floatingName" placeholder="Category Name">
+                            <label for="floatingName">Category Name</label>
                         </div>
                     </div>
-                    <input id="Tagid" type="hidden" name="id" >
+                    <input type="hidden" name="id" value="2">
 
                 </div>
                 <div class="modal-footer text-center">
@@ -128,39 +97,3 @@ if (isset($_SESSION["errors"])) {
         </div>
     </div>
 </div><!-- END Modal-->
-
-
-<script>
-    document.getElementById('formTag').addEventListener('submit', function(event) {
-
-        var name = document.getElementById('floatingName');
-
-
-        if (!isValidName(name.value)) {
-            name.classList.add('is-invalid');
-            name.classList.remove('is-valid');
-            event.preventDefault();
-        } else {
-            name.classList.add('is-valid');
-            name.classList.remove('is-invalid');
-        }
-
-
-    });
-    document.getElementById('formEdit').addEventListener('submit', function(event) {
-
-        var name = document.getElementById('TagName');
-
-
-        if (!isValidName(name.value)) {
-            name.classList.add('is-invalid');
-            name.classList.remove('is-valid');
-            event.preventDefault();
-        } else {
-            name.classList.add('is-valid');
-            name.classList.remove('is-invalid');
-        }
-
-
-    });
-</script>

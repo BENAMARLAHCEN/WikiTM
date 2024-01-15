@@ -41,6 +41,7 @@ require('include/head.php');
     <script src="assets/js/main.js"></script>
     <script src="assets/js/ajax.js"></script>
     <script src="assets/js/select.js"></script>
+    <script src="assets/js/validation.js"></script>
 
 </body>
 

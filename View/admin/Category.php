@@ -80,7 +80,7 @@ if (isset($_SESSION["errors"])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Floating Labels Form -->
-            <form class="row g-3" method="post" action="Category/insert">
+            <form class="row g-3" id="formCat" method="post" action="Category/insert">
                 <div class="modal-body">
 
                     <div class="col-md-12">
@@ -103,6 +103,8 @@ if (isset($_SESSION["errors"])) {
 
 
 
+
+
 <!-- update modal -->
 
 <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -113,7 +115,7 @@ if (isset($_SESSION["errors"])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Floating Labels Form -->
-            <form class="row g-3" method="post" action="Category/update">
+            <form class="row g-3" id="formEdit" method="post" action="Category/update">
                 <div class="modal-body">
 
                     <div class="col-md-12">
@@ -134,3 +136,38 @@ if (isset($_SESSION["errors"])) {
         </div>
     </div>
 </div><!-- END Modal-->
+
+<script>
+    document.getElementById('formCat').addEventListener('submit', function(event) {
+
+        var name = document.getElementById('floatingName');
+
+
+        if (!isValidName(name.value)) {
+            name.classList.add('is-invalid');
+            name.classList.remove('is-valid');
+            event.preventDefault();
+        } else {
+            name.classList.add('is-valid');
+            name.classList.remove('is-invalid');
+        }
+
+
+    });
+    document.getElementById('formEdit').addEventListener('submit', function(event) {
+
+        var name = document.getElementById('categoryName');
+
+
+        if (!isValidName(name.value)) {
+            name.classList.add('is-invalid');
+            name.classList.remove('is-valid');
+            event.preventDefault();
+        } else {
+            name.classList.add('is-valid');
+            name.classList.remove('is-invalid');
+        }
+
+
+    });
+</script>

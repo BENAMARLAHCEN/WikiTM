@@ -54,12 +54,12 @@ if (isset($_SESSION["errors"])) {
                                     <td><?= $wiki->id ?></td>
                                     <td><?= $wiki->title ?></td>
                                     <td><?= "" ?></td>
+                                    <td><?= $wiki->views ?></td>
                                     <td><?php if (!$wiki->archived) { ?>
                                             Public
                                         <?php } else { ?>
                                             archived
                                         <?php } ?></td>
-                                    <td><?= $wiki->views ?></td>
                                     <td><?= $wiki->create_date ?></td>
                                     <td><?= $wiki->update_date ?></td>
                                     <td>
