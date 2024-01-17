@@ -37,7 +37,6 @@ class ProfileController extends Controller
         if (!Validation::verfyName($username)) {
             $errors['name'] = "Please, enter valid name!";
         }
-        echo "jvbezhjsodjhvuhdpos  zesdohxcviu,zemksd";
 
         if (count($errors) == 0) {
             $user = new User();

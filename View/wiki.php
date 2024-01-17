@@ -1,6 +1,6 @@
 <div class="">
     <div class="w-100">
-        <img class="w-100" src="assets/upload/wiki/Article.png" alt="">
+        <img class="w-100" src="assets/upload/wiki/<?= $wiki->image ?>" alt="wiki image">
     </div>
     <div class="d-flax flex-column align-items-center m-md-5 m-sm-2 mt-sm-4">
         <div class="row">
@@ -16,7 +16,7 @@
                 <h3 class=" mt-4 mb-3 text-opacity-75">ABOUT THE AUTHOR</h3>
                 <div class="row">
                     <div class="d-flex  justify-content-center col-lg-12 col-md-3 mb-lg-4 col-sm-4">
-                        <img src="./assets/upload/user/<?= $wiki->image ?>" alt="auhtor image" class=" w-75 img-fluid rounded-circle">
+                        <img src="./assets/upload/user/<?= $wiki->imageUser ?>" alt="auhtor image" class=" w-75 img-fluid rounded-circle">
                     </div>
                     <div class="col-sm-8 col-lg-12 col-md-9">
                         <div class="d-flax flex-column ">

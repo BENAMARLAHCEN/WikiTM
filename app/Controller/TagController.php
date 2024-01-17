@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller;
+use App\core\Validation;
 use App\Model\Tag;
 
 class TagController extends Controller
@@ -17,13 +18,17 @@ class TagController extends Controller
     {
         $name = $_POST['name'];
         $tag = new Tag();
-        if ($tag->insertTag($name)) {
-            $_SESSION["valid"] =  "The tag is inserted successfully";
+        if (Validation::verfyName($name)) {
+
+            if ($tag->insertTag($name)) {
+                $_SESSION["valid"] =  "The tag is inserted successfully";
+            } else {
+                $_SESSION["errors"] = "The tag is not inserted";
+            }
         } else {
-            $_SESSION["errors"] = "The tag is not inserted";
+            $_SESSION["errors"] = "Insert valid name";
         }
         header('location:/WikiTM/Tags');
-        
     }
 
     function update()
@@ -31,14 +36,16 @@ class TagController extends Controller
         $name = $_POST['name'];
         $id = $_POST['id'];
         $tag = new Tag();
-        $currentDate = date('Y-m-d H:i:s');
-        if ($tag->updateTag($name, $id)) {
-            $_SESSION["valid"] =  "The tag is updated successfully";
+        if (Validation::verfyName($name)) {
+            if ($tag->updateTag($name, $id)) {
+                $_SESSION["valid"] =  "The tag is updated successfully";
+            } else {
+                $_SESSION["errors"] = "The tag is not updated";
+            }
         } else {
-            $_SESSION["errors"] = "The tag is not updated";
+            $_SESSION["errors"] = "Insert valid name";
         }
         header('location:/WikiTM/Tags');
-        
     }
 
     function delete()

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller;
+use App\core\Validation;
 use App\Model\Category;
 
 class CategoryController extends Controller
@@ -18,10 +19,14 @@ class CategoryController extends Controller
     {
         $name = $_POST['name'];
         $category = new Category();
-        if ($category->insertCategory($name)) {
-            $_SESSION["valid"] = "The category is inserted successfully";
+        if (Validation::verfyName($name)) {
+            if ($category->insertCategory($name)) {
+                $_SESSION["valid"] = "The category is inserted successfully";
+            } else {
+                $_SESSION["errors"] =  "The category is not inserted";
+            }
         } else {
-            $_SESSION["errors"] =  "The category is not inserted";
+            $_SESSION["errors"] = "Insert valid name";
         }
         header('location:/WikiTM/Category');
     }
@@ -30,10 +35,15 @@ class CategoryController extends Controller
         $name = $_POST['name'];
         $id = $_POST['id'];
         $category = new Category();
-        if ($category->updateCategory($name,$id)) {
-            $_SESSION["valid"] = "The category is updated successfully";
+        if (Validation::verfyName($name)) {
+
+            if ($category->updateCategory($name, $id)) {
+                $_SESSION["valid"] = "The category is updated successfully";
+            } else {
+                $_SESSION["errors"] = "The category is not updated";
+            }
         } else {
-            $_SESSION["errors"] = "The category is not updated";
+            $_SESSION["errors"] = "Insert valid name";
         }
         header('location:/WikiTM/Category');
     }

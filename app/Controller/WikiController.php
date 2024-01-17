@@ -26,7 +26,7 @@ class WikiController extends Controller
             $wikis = new Wiki();
             $wiki = $wikis->getById($id);
             if ($wiki != null) {
-                if ($wikis->changeStatus(1,$id)) {
+                if ($wikis->changeStatus(1, $id)) {
                     echo "The wiki is archived successfully";
                 } else {
                     echo "The wiki is not find";
@@ -43,7 +43,7 @@ class WikiController extends Controller
             $wikis = new Wiki();
             $wiki = $wikis->getById($id);
             if ($wiki != null) {
-                if ($wikis->changeStatus(0,$id)) {
+                if ($wikis->changeStatus(0, $id)) {
                     echo "The wiki is public successfully";
                 } else {
                     echo "The wiki is not find";
@@ -101,22 +101,35 @@ class WikiController extends Controller
         $title = $_POST['title'];
         $content = $_POST['content'];
         $category = $_POST['category'];
-        $tags = $_POST['tags'];
+        $tags = $_POST['tags'] ?? [];
         $author_id = $_SESSION['userId'];
-        $wiki = new Wiki();
-        $wikitags = new WikiTag();
-        if ($wiki->insertRecord(compact('title', 'content', 'category', 'author_id'))) {
-            $_SESSION["valid"] = "The wiki is inserted successfully";
-            $wiki = $wiki->getlastInsertedId();
-            foreach ($tags as $tag) {
-                if (!$wikitags->insertRecord(['wiki_id' => $wiki, 'tag_id' => $tag])) {
-                    echo 'tag with id ' . $tag . ' not insert';
-                }
-            }
-            header('location:/WikiTM/MyWiki');
-            exit;
+        $image = $_FILES['image']['name'];
+        // Additional validation checks if needed
+        if (empty($title) || empty($content) || empty($category)) {
+            $_SESSION["errors"] = "Title, content, and category are required fields.";
         } else {
-            $_SESSION["errors"] = "The wiki is not inserted";
+            $wiki = new Wiki();
+            $wikitags = new WikiTag();
+            if ($wiki->insertRecord(compact('title', 'content', 'category', 'author_id'))) {
+                $_SESSION["valid"] = "The wiki is inserted successfully";
+                $wikiid = $wiki->getlastInsertedId();
+                foreach ($tags as $tag) {
+                    if (!$wikitags->insertRecord(['wiki_id' => $wikiid, 'tag_id' => $tag])) {
+                        echo 'tag with id ' . $tag . ' not insert';
+                    }
+                }
+                if (!empty($image)) {
+                    $image_tmp_name = $_FILES['image']['tmp_name'];
+                    $image_folder = __DIR__ . "\\..\\..\\public\\assets\\upload\\wiki\\" . $image;
+                    if ($wiki->updateRecord(compact('image'), $wikiid)) {
+                        move_uploaded_file($image_tmp_name, $image_folder);
+                    }
+                }
+                header('location:/WikiTM/MyWiki');
+                exit;
+            } else {
+                $_SESSION["errors"] = "The wiki is not inserted";
+            }
         }
         $this->addform();
     }
@@ -126,29 +139,46 @@ class WikiController extends Controller
         $title = $_POST['title'];
         $content = $_POST['content'];
         $category = $_POST['category'];
-        $tags = $_POST['tags'];
+        $tags = $_POST['tags'] ?? [];
         $id = $_POST['id'];
-        $wiki = new Wiki();
-        $wikitags = new WikiTag();
-        $update_date = date('Y-m-d H:i:s');
-        if (count($wiki->WikiAuthor($id, Session::get('userId')))) {
-            if ($wiki->updateRecord(compact('title', 'content', 'category', 'update_date'), $id)) {
-                $_SESSION["valid"] = "The wiki is updated successfully";
-                $wikitags->deleteRecord($id);
-                foreach ($tags as $tag) {
-
-                    if (!$wikitags->insertRecord(['wiki_id' => $id, 'tag_id' => $tag])) {
-                        echo 'tag with id ' . $tag . ' not insert';
-                    }
-                }
-                header('location:/WikiTM/MyWiki');
-                exit;
-            } else {
-                $_SESSION["errors"] = "The wiki is not updated";
-            }
+        $image = $_FILES['image']['name'];
+        if (empty($title) || empty($content) || empty($category)) {
+            $_SESSION["errors"] = "Title, content, and category are required fields.";
+        } elseif (!is_numeric($category) || $category <= 0) {
+            $_SESSION["errors"] = "Invalid category selected.";
+        } elseif (!is_array($tags)) {
+            $_SESSION["errors"] = "Invalid tags format.";
         } else {
-            $_SESSION["errors"] = "You didn't have access to delete this wiki";
+            $wiki = new Wiki();
+            $wikitags = new WikiTag();
+            $update_date = date('Y-m-d H:i:s');
+            if (count($wiki->WikiAuthor($id, Session::get('userId')))) {
+                if ($wiki->updateRecord(compact('title', 'content', 'category', 'update_date'), $id)) {
+                    $_SESSION["valid"] = "The wiki is updated successfully";
+                    $wikitags->deleteRecord($id);
+                    foreach ($tags as $tag) {
+
+                        if (!$wikitags->insertRecord(['wiki_id' => $id, 'tag_id' => $tag])) {
+                            echo 'tag with id ' . $tag . ' not insert';
+                        }
+                    }
+                    if (!empty($image)) {
+                        $image_tmp_name = $_FILES['image']['tmp_name'];
+                        $image_folder = __DIR__ . "\\..\\..\\public\\assets\\upload\\wiki\\" . $image;
+                        if ($wiki->updateRecord(compact('image'), $id)) {
+                            move_uploaded_file($image_tmp_name, $image_folder);
+                        }
+                    }
+                    header('location:/WikiTM/MyWiki');
+                    exit;
+                } else {
+                    $_SESSION["errors"] = "The wiki is not updated";
+                }
+            } else {
+                $_SESSION["errors"] = "You didn't have access to delete this wiki";
+            }
         }
+        $this->Editform();
     }
 
     function delete()
@@ -159,7 +189,7 @@ class WikiController extends Controller
             $id = $_POST['delete'];
 
             $wiki = new Wiki();
-            if (count($wiki->WikiAuthor($id,Session::get('userId')))) {
+            if (count($wiki->WikiAuthor($id, Session::get('userId')))) {
                 if ($wiki->deleteRecord($id)) {
                     $_SESSION["valid"] = "The wiki is deleted successfully";
                 } else {
@@ -168,10 +198,9 @@ class WikiController extends Controller
             } else {
                 $_SESSION["errors"] = "You didn't have access to delete this wiki";
             }
-        }else{
+        } else {
             $_SESSION["errors"] = "no sure what wiki you need to delete";
         }
         $this->authorWiki();
-
     }
 }

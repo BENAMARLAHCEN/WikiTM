@@ -23,7 +23,7 @@ class Wiki extends Model
 
     public function getAuthorWiki($id)
     {
-        return $this->selectRecords('*', 'author_id =' . $id, 'create_date DESC');
+        return $this->selectRecords('*', 'author_id =' . $id, 'create_date ');
     }
 
     public function WikiAuthor($id,$authorId){
@@ -32,7 +32,7 @@ class Wiki extends Model
 
     public function selectAll()
     {
-        return $this->selectRecords('*', null, 'create_date DESC');
+        return $this->selectRecords('*', null, 'create_date ');
     }
 
     public function searchByTagTitle($search)
@@ -52,7 +52,7 @@ class Wiki extends Model
 
     public function getWikiDetail($id)
     {
-        return $this->selectRecords(' wiki.*,category.name,user.username,user.about,user.image,user.Job ', 'wiki.id = ' . $id, null, null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category ');
+        return $this->selectRecords(' wiki.*,category.name,user.username,user.about,user.image as imageUser,user.Job ', 'wiki.id = ' . $id, null, null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category ');
     }
 
     public function changeStatus($status,$id){

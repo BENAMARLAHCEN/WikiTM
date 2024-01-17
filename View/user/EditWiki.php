@@ -115,7 +115,7 @@ if (isset($_SESSION["errors"])) {
 
 
         // Validate Title
-        if (!isValidName(title.value)) {
+        if (title.value.trim() === "") {
             title.classList.add('is-invalid');
             title.classList.remove('is-valid');
             event.preventDefault();
