@@ -10,7 +10,7 @@ class Validation
     }
     public static function verfyName($name)
     {
-        return preg_match("/^[a-zA-Z-']+$/", $name);
+        return preg_match("/^[a-zA-Z-'\ ]+$/", $name);
     }
     public static function verfyPassword($password)
     {

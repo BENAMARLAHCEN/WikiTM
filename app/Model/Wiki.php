@@ -23,7 +23,7 @@ class Wiki extends Model
 
     public function getAuthorWiki($id)
     {
-        return $this->selectRecords('*', 'author_id =' . $id, 'create_date ');
+        return $this->selectRecords('*', 'author_id =' . $id, 'create_date DESC');
     }
 
     public function WikiAuthor($id,$authorId){
@@ -32,22 +32,22 @@ class Wiki extends Model
 
     public function selectAll()
     {
-        return $this->selectRecords('*', null, 'create_date ');
+        return $this->selectRecords('*', null, 'create_date DESC');
     }
 
     public function searchByTagTitle($search)
     {
-        return $this->selectRecords(' DISTINCT wiki.*,category.name,user.username ', "archived = 0 and (wiki.title LIKE ('%$search%') OR tags.name LIKE ('%$search%'))", ' wiki.create_date  ', null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category LEFT JOIN wikitags on wikitags.wiki_id = wiki.id LEFT JOIN tags ON tags.id = wikitags.tag_id');
+        return $this->selectRecords(' DISTINCT wiki.*,category.name,user.username ', "archived = 0 and (wiki.title LIKE ('%$search%') OR tags.name LIKE ('%$search%'))", ' wiki.create_date DESC ', null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category LEFT JOIN wikitags on wikitags.wiki_id = wiki.id LEFT JOIN tags ON tags.id = wikitags.tag_id');
     }
 
     public function getByCategory($categoryId)
     {
-        return $this->selectRecords(' wiki.*,category.name,user.username ', 'archived = 0 and category.id = ' . $categoryId, ' wiki.create_date', null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category ');
+        return $this->selectRecords(' wiki.*,category.name,user.username ', 'archived = 0 and category.id = ' . $categoryId, ' wiki.create_date DESC ', null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category ');
     }
 
     public function getWikiData()
     {
-        return $this->selectRecords(' wiki.*,category.name,user.username ', 'archived = 0', ' wiki.create_date limit 4 ', null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category ');
+        return $this->selectRecords(' wiki.*,category.name,user.username ', 'archived = 0', ' wiki.create_date DESC limit 4 ', null, ' INNER JOIN user on user.id = wiki.author_id INNER JOIN category on category.id = wiki.category ');
     }
 
     public function getWikiDetail($id)

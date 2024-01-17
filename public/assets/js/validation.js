@@ -14,7 +14,7 @@ function isValidPassword(password) {
 }
 
 function validateImage(image) {
-    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.webp|\.svg)$/i;
     if (!allowedExtensions.exec(image)) {
         return false;
     } else {

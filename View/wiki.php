@@ -8,7 +8,7 @@
                 <h1 class="w-100 text-center "><?= $wiki->title ?></h1>
                 <div class="w-100 text-center mt-3 "><?= $wiki->username ?> . <?= $wiki->create_date ?></div>
                 <div class="w-100 text-center mt-1 "><?= $wiki->name ?></div>
-                <div class="w-100 mt-4 mx-2">
+                <div class="w-100 p-1 mxw mt-4 mx-2">
                     <?= $wiki->content ?>
                 </div>
             </div>
@@ -43,3 +43,9 @@
 </div>
 
 </div>
+
+<style>
+.mxw{
+    max-width: 100vh;
+}
+</style>
